@@ -1,0 +1,408 @@
+<title>Hội viên 24 FIT</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: sổ quầy một cột — tiêu đề ngắn, nội dung tab, thanh tab cố định dưới đáy cho ngón cái */
+:root{
+  --bg:#F3F2F7; --card:#FFFFFF; --ink:#17151F; --muted:#686477; --line:#E2E0EA;
+  --brand:#5B3FD6; --brand-soft:#ECE8FB; --brand-ink:#FFFFFF;
+  --ok:#11845B; --ok-soft:#DFF3EA; --warn:#B76A00; --warn-soft:#FDF0DC;
+  --bad:#C23B3B; --bad-soft:#FBE4E4; --trial:#2B6CB0; --trial-soft:#E1EDFA;
+  --font:"Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#110F18; --card:#1B1825; --ink:#EEEBF6; --muted:#9E99B0; --line:#2C2839;
+  --brand:#9C86FF; --brand-soft:#2A2244; --brand-ink:#14111C;
+  --ok:#4CC995; --ok-soft:#173327; --warn:#F0A64A; --warn-soft:#3A2A14;
+  --bad:#F07A7A; --bad-soft:#3A1C1F; --trial:#74A9EC; --trial-soft:#182A40; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#110F18; --card:#1B1825; --ink:#EEEBF6; --muted:#9E99B0; --line:#2C2839;
+  --brand:#9C86FF; --brand-soft:#2A2244; --brand-ink:#14111C;
+  --ok:#4CC995; --ok-soft:#173327; --warn:#F0A64A; --warn-soft:#3A2A14;
+  --bad:#F07A7A; --bad-soft:#3A1C1F; --trial:#74A9EC; --trial-soft:#182A40; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.45;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:12px calc(92px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.num{font-variant-numeric:tabular-nums}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:4px}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.02em}
+.logo b{color:var(--brand)}
+.today{font-size:13px;color:var(--muted)}
+h2{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:6px 2px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;min-width:0}
+.stat .k{font-size:12px;color:var(--muted);font-weight:600}
+.stat .v{font-size:26px;font-weight:800;letter-spacing:-.02em;overflow-wrap:anywhere}
+.stat .s{font-size:12px;color:var(--muted)}
+.search{display:flex;gap:8px}
+.search input{flex:1;min-width:0;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px 14px;font-size:16px}
+.btn{border:0;border-radius:12px;padding:11px 16px;font-weight:700;background:var(--brand);color:var(--brand-ink);min-height:44px}
+.btn.ghost{background:var(--brand-soft);color:var(--brand)}
+.btn.plain{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.btn.danger{background:var(--bad);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+.list{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:11px 2px;border-top:1px solid var(--line);background:none;border-left:0;border-right:0;border-bottom:0;text-align:left;width:100%}
+.row:first-child{border-top:0}
+.row .n{font-weight:700;min-width:0;overflow-wrap:anywhere}
+.row .m{font-size:13px;color:var(--muted)}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.p-con{background:var(--ok-soft);color:var(--ok)} .p-sap{background:var(--warn-soft);color:var(--warn)}
+.p-het{background:var(--bad-soft);color:var(--bad)} .p-thu{background:var(--trial-soft);color:var(--trial)}
+.p-chua{background:var(--bg);color:var(--muted)}
+.right{text-align:right}
+.empty{color:var(--muted);text-align:center;padding:20px 8px;font-size:14px}
+.empty b{display:block;color:var(--ink);font-size:15px;margin-bottom:4px}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));
+  display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+nav button{border:0;background:transparent;border-radius:12px;padding:8px 4px;font-size:12px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px;min-height:52px}
+nav button[aria-current="page"]{color:var(--brand);background:var(--brand-soft)}
+nav svg{width:22px;height:22px}
+.sheet-bg{position:fixed;inset:0;background:rgba(10,8,20,.45);z-index:30;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--bg);width:100%;max-width:600px;max-height:92vh;overflow:auto;border-radius:20px 20px 0 0;
+  padding:16px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:12px}
+.sheet h3{margin:0;font-size:19px;font-weight:800}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-size:13px;font-weight:600;color:var(--muted)}
+.field input,.field select{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:11px 12px;font-size:16px;min-width:0;width:100%}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.actions .btn{flex:1}
+.note{font-size:13px;color:var(--muted)}
+.warnbox{background:var(--warn-soft);color:var(--warn);border-radius:12px;padding:10px 12px;font-size:14px;font-weight:600}
+.badbox{background:var(--bad-soft);color:var(--bad);border-radius:12px;padding:10px 12px;font-size:14px;font-weight:600}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:40;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;max-width:calc(100% - 32px)}
+.status{font-size:12px;color:var(--muted);text-align:center}
+.phone{font-variant-numeric:tabular-nums;user-select:all}
+.mini{font-size:13px;padding:6px 10px;min-height:34px}
+.hist{font-size:14px}
+.hist div{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-top:1px dashed var(--line)}
+.hist div:first-child{border-top:0}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:up .18s ease-out}@keyframes up{from{transform:translateY(24px);opacity:.6}}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="logo">24 <b>FIT</b> · Hội viên</div>
+    <div class="today num" id="today"></div>
+  </header>
+  <main id="view"></main>
+  <p class="status" id="status">Đang mở sổ…</p>
+</div>
+
+<nav aria-label="Các mục">
+  <button data-tab="tong" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13h6V4H4zM14 20h6v-9h-6zM14 4v4h6V4zM4 20h6v-3H4z"/></svg>Tổng quan</button>
+  <button data-tab="hv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5M16 4.8a3.3 3.3 0 0 1 0 6.4M18 14.8c2 .6 3.2 2.4 3.6 5.2"/></svg>Hội viên</button>
+  <button data-tab="dd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M8 2.5v4M16 2.5v4M8 13l3 3 5-6"/></svg>Điểm danh</button>
+  <button data-tab="goi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3.5 9.5h17v10a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1zM2.5 5.5h19v4h-19zM12 5.5v15M12 5.5c-1.5-3-5-3-5-1s3 1 5 1c2 0 5 1 5-1s-3.5-2-5 1"/></svg>Gói tập</button>
+</nav>
+<div id="layer"></div>
+
+<script>
+/*LOGIC*/
+</script>
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const S = { hoivien: [], goi: [], the: [], diemdanh: [], thu: [] };
+const COLS = Object.keys(S);
+const MAU_GOI = [
+  { ten: "Tập thử 3 ngày", donVi: "ngay", soLuong: 3, gia: 0, thu: true, thuTu: 0 },
+  { ten: "1 tháng", donVi: "thang", soLuong: 1, gia: 300000, thu: false, thuTu: 1 },
+  { ten: "3 tháng", donVi: "thang", soLuong: 3, gia: 800000, thu: false, thuTu: 2 },
+  { ten: "6 tháng", donVi: "thang", soLuong: 6, gia: 1500000, thu: false, thuTu: 3 },
+  { ten: "12 tháng", donVi: "thang", soLuong: 12, gia: 2800000, thu: false, thuTu: 4 },
+];
+let tab = "tong", q = "", qdd = "", readOnly = false, loaded = false;
+const homNay = () => L.homNayVN();
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+/* ---------- lưu trữ: kho db của trang, hoặc trình duyệt ---------- */
+const store = {
+  mode: "local", db: null, KEY: "24fit-hoivien-v1",
+  loadLocal() {
+    try { const d = JSON.parse(localStorage.getItem(this.KEY) || "null"); if (d) COLS.forEach((c) => (S[c] = d[c] || [])); } catch (e) {}
+    if (!S.goi.length) S.goi = MAU_GOI.map((g) => ({ id: uid(), ...g }));
+  },
+  saveLocal() { try { localStorage.setItem(this.KEY, JSON.stringify(S)); return true; } catch (e) { return false; } },
+  async set(col, id, data) {
+    if (this.mode === "db") { await this.db.collection(col).doc(id).set(data); return; }
+    const i = S[col].findIndex((x) => x.id === id);
+    if (i >= 0) S[col][i] = { id, ...data }; else S[col].push({ id, ...data });
+    if (!this.saveLocal()) throw new Error("local");
+    render();
+  },
+  async del(col, id) {
+    if (this.mode === "db") { await this.db.collection(col).doc(id).delete(); return; }
+    S[col] = S[col].filter((x) => x.id !== id); this.saveLocal(); render();
+  },
+};
+async function luu(col, id, data, ok = "Đã lưu") {
+  try { await store.set(col, id, data); toast(ok); return true; }
+  catch (e) { if (e && e.code === "invalid_argument") readOnly = true; toast(readOnly ? "Bạn chỉ có quyền xem sổ này." : "Chưa lưu được. Kiểm tra mạng rồi thử lại."); return false; }
+}
+async function xoa(col, id, ok = "Đã xóa") {
+  try { await store.del(col, id); toast(ok); return true; } catch (e) { toast("Chưa xóa được. Thử lại sau."); return false; }
+}
+function setStatus(t) { $("#status").textContent = t; }
+
+async function boot() {
+  $("#today").textContent = L.ngayVN(homNay());
+  if (!window.claude || !window.claude.use) { store.loadLocal(); loaded = true; setStatus("Dữ liệu lưu trên trình duyệt của máy này."); render(); return; }
+  render();
+  const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+  if (!db) { store.loadLocal(); loaded = true; setStatus("Dữ liệu lưu trên trình duyệt của máy này. Mở trên claude.ai để dùng chung nhiều máy."); render(); return; }
+  store.mode = "db"; store.db = db;
+  if (user) { try { const c = await user.can("data.write"); if (c === false) readOnly = true; } catch (e) {} }
+  const pending = new Set(COLS);
+  const timer = setTimeout(() => { if (pending.size) setStatus("Chưa kết nối được sổ. Dữ liệu sẽ hiện khi có mạng."); }, 10000);
+  COLS.forEach((c) => {
+    db.collection(c).onSnapshot((snap) => {
+      S[c] = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      if (!snap.metadata.fromCache) { pending.delete(c); if (!pending.size) { clearTimeout(timer); loaded = true; setStatus(readOnly ? "Bạn đang xem sổ (không sửa được)." : "Sổ dùng chung, lưu tự động trên mọi máy."); } }
+      render();
+    }, () => { clearTimeout(timer); setStatus("Không mở được sổ lúc này. Tải lại trang sau ít phút."); });
+  });
+}
+
+/* ---------- tính toán ---------- */
+const theCua = (id) => S.the.filter((t) => t.hoivienId === id);
+const ttCua = (id) => L.trangThai(theCua(id), homNay());
+const goiSorted = () => [...S.goi].sort((a, b) => (a.thuTu ?? 99) - (b.thuTu ?? 99));
+const pill = (t) => `<span class="pill p-${t.ma}">${esc(t.nhan)}</span>`;
+const hanText = (t) => !t.han ? "" : t.ma === "het" ? `Hết từ ${L.ngayVN(t.han)}` : `Hạn ${L.ngayVN(t.han)} · còn ${t.con} ngày`;
+function dsHoiVien(filter) {
+  const order = { het: 1, sap: 0, thu: 2, con: 3, chua: 4 };
+  return S.hoivien.filter((h) => L.khop(h, filter)).map((h) => ({ h, t: ttCua(h.id) }))
+    .sort((a, b) => order[a.t.ma] - order[b.t.ma] || (a.t.han || "").localeCompare(b.t.han || "") || a.h.ten.localeCompare(b.h.ten, "vi"));
+}
+
+/* ---------- giao diện ---------- */
+function render() {
+  document.querySelectorAll("nav button").forEach((b) => b.setAttribute("aria-current", b.dataset.tab === tab ? "page" : "false"));
+  const v = $("#view");
+  const keep = document.activeElement && document.activeElement.id;
+  const pos = keep && document.activeElement.selectionStart;
+  v.innerHTML = tab === "tong" ? vTong() : tab === "hv" ? vHoiVien() : tab === "dd" ? vDiemDanh() : vGoi();
+  if (keep && $("#" + keep)) { const el = $("#" + keep); el.focus(); try { el.setSelectionRange(pos, pos); } catch (e) {} }
+  bindView();
+}
+function vTong() {
+  const h = homNay(), ym = h.slice(0, 7), prev = L.thangTruoc(ym);
+  const tts = S.hoivien.map((x) => ({ x, t: ttCua(x.id) }));
+  const con = tts.filter((o) => ["con", "sap", "thu"].includes(o.t.ma)).length;
+  const sap = tts.filter((o) => o.t.ma === "sap");
+  const chot = S.hoivien.filter((x) => L.canGoiChot(theCua(x.id), h));
+  const luot = S.diemdanh.filter((d) => d.ngay === h).length;
+  const tNay = L.doanhThuThang(S.thu, ym), tTruoc = L.doanhThuThang(S.thu, prev);
+  const goiNay = S.thu.filter((x) => (x.ngay || "").startsWith(ym) && x.soTien > 0).length;
+  const nhac = [...sap.map((o) => ({ x: o.x, why: `Hết hạn ${L.ngayVN(o.t.han)} (còn ${o.t.con} ngày)`, cls: "p-sap", tag: "Sắp hết" })),
+    ...chot.map((x) => ({ x, why: "Tập thử đã hết, chưa mua gói", cls: "p-thu", tag: "Gọi chốt" }))];
+  if (!S.hoivien.length && loaded) return `<div class="card empty"><b>Sổ còn trống</b>Vào mục Hội viên, bấm "+ Thêm" để ghi người đầu tiên.</div>`;
+  return `
+  <div class="stats">
+    <div class="stat"><div class="k">Còn hạn</div><div class="v num">${con}</div><div class="s">trên ${S.hoivien.length} hội viên</div></div>
+    <div class="stat"><div class="k">Sắp hết hạn</div><div class="v num" style="color:var(--warn)">${sap.length}</div><div class="s">trong 7 ngày tới</div></div>
+    <div class="stat"><div class="k">Lượt tập hôm nay</div><div class="v num">${luot}</div><div class="s">${L.ngayVN(h)}</div></div>
+    <div class="stat"><div class="k">Thu tháng ${Number(ym.slice(5))}</div><div class="v num">${L.tien(tNay).replace(" ₫", "")}<span style="font-size:15px"> ₫</span></div><div class="s">${goiNay} gói · tháng trước ${L.tien(tTruoc)}</div></div>
+  </div>
+  <h2>Cần nhắc (${nhac.length})</h2>
+  <div class="card list">${nhac.length ? nhac.map((o) => `
+    <div class="row"><div><div class="n">${esc(o.x.ten)} <span class="pill ${o.cls}">${o.tag}</span></div><div class="m">${esc(o.why)}</div>
+    ${o.x.sdt ? `<div class="m phone">${esc(o.x.sdt)}</div>` : ""}</div>
+    <div class="actions" style="flex-direction:column">${o.x.sdt ? `<button class="btn ghost mini" data-copy="${esc(o.x.sdt)}">Sao chép SĐT</button>` : ""}<button class="btn plain mini" data-open="${o.x.id}">Mở</button></div></div>`).join("")
+    : `<div class="empty">Không có ai cần nhắc hôm nay.</div>`}</div>`;
+}
+function vHoiVien() {
+  const ds = dsHoiVien(q);
+  return `
+  <div class="search"><input id="q" placeholder="Tìm tên hoặc số điện thoại" value="${esc(q)}" aria-label="Tìm hội viên" autocomplete="off"><button class="btn" id="add">+ Thêm</button></div>
+  <div class="card list">${ds.length ? ds.map(({ h, t }) => `
+    <button class="row" data-open="${h.id}"><div><div class="n">${esc(h.ten)}</div><div class="m num">${esc(h.sdt || "")}${h.sdt && t.han ? " · " : ""}${hanText(t)}</div></div><div class="right">${pill(t)}</div></button>`).join("")
+    : `<div class="empty">${S.hoivien.length ? "Không tìm thấy ai khớp." : "<b>Chưa có hội viên</b>Bấm \"+ Thêm\" để ghi người đầu tiên."}</div>`}</div>
+  <p class="note">${S.hoivien.length} hội viên · sắp xếp: sắp hết hạn, hết hạn, đang tập thử, còn hạn.</p>`;
+}
+function vDiemDanh() {
+  const h = homNay();
+  const ds = qdd ? dsHoiVien(qdd).slice(0, 8) : [];
+  const hom = S.diemdanh.filter((d) => d.ngay === h).map((d) => ({ d, x: S.hoivien.find((x) => x.id === d.hoivienId) })).filter((o) => o.x);
+  return `
+  <div class="search"><input id="qdd" placeholder="Gõ tên hoặc SĐT để điểm danh" value="${esc(qdd)}" aria-label="Tìm để điểm danh" autocomplete="off" style="font-size:18px;padding:14px"></div>
+  ${qdd ? `<div class="card list">${ds.length ? ds.map(({ h: x, t }) => {
+    const da = S.diemdanh.some((d) => d.id === `${h}_${x.id}`);
+    return `<div class="row"><div><div class="n">${esc(x.ten)} ${pill(t)}</div><div class="m">${hanText(t) || "Chưa mua gói"}</div></div>
+    ${da ? `<span class="pill p-con">Đã điểm danh</span>` : `<button class="btn mini" data-dd="${x.id}">Điểm danh</button>`}</div>`; }).join("") : `<div class="empty">Không tìm thấy ai.</div>`}</div>` : ""}
+  <h2>Hôm nay ${L.ngayVN(h)} · ${hom.length} lượt</h2>
+  <div class="card list">${hom.length ? hom.map(({ d, x }) => `<button class="row" data-open="${x.id}"><div class="n">${esc(x.ten)}</div><div class="right">${d.hetHanLucDo ? `<span class="pill p-het">Tập khi hết hạn</span>` : pill(ttCua(x.id))}</div></button>`).join("")
+    : `<div class="empty">Chưa ai điểm danh hôm nay.</div>`}</div>`;
+}
+function vGoi() {
+  const ds = goiSorted();
+  return `
+  <div class="card list">${ds.length ? ds.map((g) => `
+    <button class="row" data-goi="${g.id}"><div><div class="n">${esc(g.ten)} ${g.thu ? `<span class="pill p-thu">Tập thử</span>` : ""}</div><div class="m">${g.soLuong} ${g.donVi === "ngay" ? "ngày" : "tháng"}</div></div><div class="right num" style="font-weight:700">${L.tien(g.gia)}</div></button>`).join("")
+    : `<div class="empty"><b>Chưa có gói tập</b>Tạo bộ gói mẫu rồi sửa giá cho đúng.<div style="margin-top:10px"><button class="btn" id="mau">Tạo 5 gói mẫu</button></div></div>`}</div>
+  <div class="actions"><button class="btn ghost" id="addgoi">+ Thêm gói</button></div>
+  <p class="note">Giá là giá mẫu. Bấm vào gói để sửa theo giá thật của phòng tập.</p>`;
+}
+function bindView() {
+  const v = $("#view");
+  const qi = $("#q"); if (qi) qi.oninput = (e) => { q = e.target.value; render(); };
+  const qd = $("#qdd"); if (qd) qd.oninput = (e) => { qdd = e.target.value; render(); };
+  const add = $("#add"); if (add) add.onclick = () => formHoiVien();
+  const ag = $("#addgoi"); if (ag) ag.onclick = () => formGoi();
+  const mau = $("#mau"); if (mau) mau.onclick = async () => { for (const g of MAU_GOI) await store.set("goi", uid(), g).catch(() => {}); toast("Đã tạo 5 gói mẫu"); };
+  v.querySelectorAll("[data-open]").forEach((b) => (b.onclick = () => hoSo(b.dataset.open)));
+  v.querySelectorAll("[data-goi]").forEach((b) => (b.onclick = () => formGoi(S.goi.find((g) => g.id === b.dataset.goi))));
+  v.querySelectorAll("[data-dd]").forEach((b) => (b.onclick = () => diemDanh(b.dataset.dd)));
+  v.querySelectorAll("[data-copy]").forEach((b) => (b.onclick = () => copy(b.dataset.copy)));
+}
+document.querySelectorAll("nav button").forEach((b) => (b.onclick = () => { tab = b.dataset.tab; render(); window.scrollTo(0, 0); }));
+
+/* ---------- lớp phủ ---------- */
+function sheet(html, onBind) {
+  const L2 = $("#layer");
+  L2.innerHTML = `<div class="sheet-bg" id="bg"><div class="sheet" role="dialog" aria-modal="true">${html}</div></div>`;
+  $("#bg").onclick = (e) => { if (e.target.id === "bg") close(); };
+  onBind && onBind($(".sheet"));
+  const f = $(".sheet input"); if (f) setTimeout(() => { if (!$(".sheet").contains(document.activeElement)) f.focus(); }, 30);
+}
+function close() { $("#layer").innerHTML = ""; }
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") close(); });
+let tt; function toast(msg) { clearTimeout(tt); let el = $(".toast"); if (!el) { el = document.createElement("div"); el.className = "toast"; el.setAttribute("role", "status"); document.body.appendChild(el); } el.textContent = msg; tt = setTimeout(() => el.remove(), 2400); }
+async function copy(t) { try { await navigator.clipboard.writeText(t); toast("Đã sao chép " + t); } catch (e) { toast("Số điện thoại: " + t); } }
+
+function goiOptions(sel) { return goiSorted().map((g) => `<option value="${g.id}" ${g.id === sel ? "selected" : ""}>${esc(g.ten)} · ${L.tien(g.gia)}</option>`).join(""); }
+
+function formHoiVien(h) {
+  const moi = !h;
+  sheet(`<h3>${moi ? "Thêm hội viên" : "Sửa hội viên"}</h3>
+    <div class="field"><label for="f-ten">Họ tên</label><input id="f-ten" value="${esc(h?.ten)}" maxlength="80" autocomplete="off"></div>
+    <div class="field"><label for="f-sdt">Số điện thoại</label><input id="f-sdt" inputmode="tel" value="${esc(h?.sdt)}" maxlength="14" autocomplete="off"></div>
+    <div id="dup"></div>
+    ${moi ? `<div class="grid2"><div class="field"><label for="f-goi">Gói tập</label><select id="f-goi"><option value="">Chưa mua gói</option>${goiOptions(goiSorted()[1]?.id)}</select></div>
+    <div class="field"><label for="f-bd">Bắt đầu</label><input id="f-bd" type="date" value="${homNay()}"></div></div>
+    <div class="field"><label for="f-tien">Số tiền thu (₫)</label><input id="f-tien" inputmode="numeric" class="num"></div>` : ""}
+    <div class="field"><label for="f-gc">Ghi chú</label><input id="f-gc" value="${esc(h?.ghichu)}" maxlength="200" autocomplete="off"></div>
+    <div class="actions"><button class="btn plain" id="huy">Hủy</button><button class="btn" id="ok">Lưu</button></div>`, (s) => {
+    const sdt = $("#f-sdt", s), dup = $("#dup", s);
+    const chk = () => { const v = sdt.value.replace(/\D/g, ""); const d = v.length >= 9 && S.hoivien.find((x) => x.sdt === v && x.id !== h?.id);
+      dup.innerHTML = d ? `<div class="warnbox">Số này đã có: ${esc(d.ten)}. <button class="btn plain mini" id="moCu">Mở hồ sơ</button></div>` : "";
+      const mc = $("#moCu", s); if (mc) mc.onclick = () => hoSo(d.id); };
+    sdt.oninput = chk; chk();
+    const fg = $("#f-goi", s), ft = $("#f-tien", s);
+    const setTien = () => { if (!fg) return; const g = S.goi.find((x) => x.id === fg.value); ft.value = g ? String(g.gia) : ""; ft.disabled = !g; };
+    if (fg) { fg.onchange = setTien; setTien(); }
+    $("#huy", s).onclick = close;
+    $("#ok", s).onclick = async () => {
+      const ten = $("#f-ten", s).value.trim(); if (!ten) { $("#f-ten", s).focus(); toast("Nhập họ tên trước đã."); return; }
+      const id = h?.id || uid();
+      const data = { ten, sdt: sdt.value.replace(/\D/g, ""), ghichu: $("#f-gc", s).value.trim(), taoLuc: h?.taoLuc || Date.now() };
+      if (!(await luu("hoivien", id, data, moi ? "Đã thêm " + ten : "Đã lưu"))) return;
+      if (moi && fg && fg.value) await banGoi({ id, ...data }, fg.value, $("#f-bd", s).value || homNay(), Number(ft.value.replace(/\D/g, "")) || 0);
+      close();
+    };
+  });
+}
+async function banGoi(h, goiId, batDau, soTien) {
+  const g = S.goi.find((x) => x.id === goiId); if (!g) return;
+  const hetHan = L.tinhHetHan(batDau, g), theId = uid();
+  await luu("the", theId, { hoivienId: h.id, goiId: g.id, goiTen: g.ten, thu: !!g.thu, batDau, hetHan, taoLuc: Date.now() }, `Đã bán ${g.ten}, hạn ${L.ngayVN(hetHan)}`);
+  if (soTien > 0 || !g.thu) await store.set("thu", uid(), { hoivienId: h.id, hoivienTen: h.ten, theId, goiTen: g.ten, soTien, ngay: homNay() }).catch(() => toast("Chưa lưu được khoản thu."));
+}
+function hoSo(id) {
+  const h = S.hoivien.find((x) => x.id === id); if (!h) return;
+  const t = ttCua(id), ths = theCua(id).sort((a, b) => b.batDau.localeCompare(a.batDau));
+  const thus = S.thu.filter((x) => x.hoivienId === id).sort((a, b) => b.ngay.localeCompare(a.ngay));
+  const dds = S.diemdanh.filter((d) => d.hoivienId === id).sort((a, b) => b.ngay.localeCompare(a.ngay));
+  const bd = L.batDauGiaHan(theCua(id), homNay());
+  const daDD = S.diemdanh.some((d) => d.id === `${homNay()}_${id}`);
+  sheet(`<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><h3>${esc(h.ten)}</h3><div class="note phone">${esc(h.sdt || "Chưa có SĐT")}</div></div>${pill(t)}</div>
+    ${t.han ? `<div class="card"><div class="note">Hạn hiện tại</div><div style="font-size:22px;font-weight:800" class="num">${L.ngayVN(t.han)}</div><div class="note">${t.ma === "het" ? "Đã hết hạn" : "Còn " + t.con + " ngày"}</div></div>` : ""}
+    ${h.ghichu ? `<div class="note">Ghi chú: ${esc(h.ghichu)}</div>` : ""}
+    <div class="actions">${daDD ? `<span class="pill p-con" style="align-self:center">Đã điểm danh hôm nay</span>` : `<button class="btn ghost" id="dd">Điểm danh</button>`}${h.sdt ? `<button class="btn plain" id="cp">Sao chép SĐT</button>` : ""}</div>
+    <h2>${t.ma === "chua" ? "Bán gói" : "Gia hạn / bán thêm gói"}</h2>
+    <div class="card" style="display:flex;flex-direction:column;gap:10px">
+      <div class="grid2"><div class="field"><label for="g-goi">Gói</label><select id="g-goi">${goiOptions(goiSorted().find((g) => !g.thu)?.id)}</select></div>
+      <div class="field"><label for="g-bd">Bắt đầu</label><input id="g-bd" type="date" value="${bd}"></div></div>
+      <div class="field"><label for="g-tien">Số tiền thu (₫)</label><input id="g-tien" inputmode="numeric" class="num"></div>
+      <div class="note" id="g-han"></div>
+      <button class="btn" id="ban">Lưu gói</button>
+    </div>
+    <h2>Lịch sử gói (${ths.length})</h2>
+    <div class="card hist">${ths.length ? ths.map((x) => `<div><span>${esc(x.goiTen)}</span><span class="num">${L.ngayVN(x.batDau)} → ${L.ngayVN(x.hetHan)}</span></div>`).join("") : `<div class="note">Chưa mua gói nào.</div>`}</div>
+    <h2>Đã thu (${L.tien(thus.reduce((s, x) => s + (x.soTien || 0), 0))})</h2>
+    <div class="card hist">${thus.length ? thus.map((x) => `<div><span>${L.ngayVN(x.ngay)} · ${esc(x.goiTen)}</span><span class="num">${L.tien(x.soTien)}</span></div>`).join("") : `<div class="note">Chưa có khoản thu.</div>`}</div>
+    <h2>Điểm danh gần đây (${dds.length})</h2>
+    <div class="card hist">${dds.length ? dds.slice(0, 10).map((d) => `<div><span class="num">${L.ngayVN(d.ngay)}</span><span>${d.hetHanLucDo ? "khi đã hết hạn" : ""}</span></div>`).join("") : `<div class="note">Chưa điểm danh lần nào.</div>`}</div>
+    <div class="actions"><button class="btn plain" id="sua">Sửa thông tin</button><button class="btn plain" id="xoa" style="color:var(--bad)">Xóa hội viên</button></div>
+    <div id="xn"></div>
+    <button class="btn plain" id="dong">Đóng</button>`, (s) => {
+    const fg = $("#g-goi", s), ft = $("#g-tien", s), fb = $("#g-bd", s), fh = $("#g-han", s);
+    const upd = () => { const g = S.goi.find((x) => x.id === fg.value); if (!g) return; ft.value = String(g.gia); fh.textContent = `Hạn mới: ${L.ngayVN(L.tinhHetHan(fb.value || homNay(), g))}${bd > homNay() ? " (nối tiếp hạn cũ)" : ""}`; };
+    fg.onchange = upd; fb.onchange = upd; upd();
+    $("#ban", s).onclick = async () => { $("#ban", s).disabled = true; await banGoi(h, fg.value, fb.value || homNay(), Number(ft.value.replace(/\D/g, "")) || 0); setTimeout(() => hoSo(id), 250); };
+    const dd = $("#dd", s); if (dd) dd.onclick = async () => { await diemDanh(id, true); setTimeout(() => hoSo(id), 250); };
+    const cp = $("#cp", s); if (cp) cp.onclick = () => copy(h.sdt);
+    $("#sua", s).onclick = () => formHoiVien(h);
+    $("#dong", s).onclick = close;
+    $("#xoa", s).onclick = () => {
+      $("#xn", s).innerHTML = `<div class="badbox">Xóa ${esc(h.ten)} cùng lịch sử gói và điểm danh? Các khoản đã thu vẫn giữ trong doanh thu.<div class="actions" style="margin-top:8px"><button class="btn plain mini" id="khong">Không xóa</button><button class="btn danger mini" id="chac">Xóa hẳn</button></div></div>`;
+      $("#khong", s).onclick = () => ($("#xn", s).innerHTML = "");
+      $("#chac", s).onclick = async () => {
+        for (const x of theCua(id)) await store.del("the", x.id).catch(() => {});
+        for (const d of S.diemdanh.filter((d) => d.hoivienId === id)) await store.del("diemdanh", d.id).catch(() => {});
+        if (await xoa("hoivien", id, "Đã xóa " + h.ten)) close();
+      };
+    };
+  });
+}
+async function diemDanh(id, force) {
+  const h = S.hoivien.find((x) => x.id === id); if (!h) return;
+  const t = ttCua(id), ngay = homNay(), docId = `${ngay}_${id}`;
+  if (S.diemdanh.some((d) => d.id === docId)) { toast(h.ten + " đã điểm danh hôm nay"); return; }
+  if ((t.ma === "het" || t.ma === "chua") && !force) {
+    sheet(`<h3>${esc(h.ten)}</h3><div class="badbox">${t.ma === "het" ? "Đã hết hạn từ " + L.ngayVN(t.han) : "Chưa mua gói tập"}.</div>
+      <div class="actions"><button class="btn" id="gh">Gia hạn ngay</button><button class="btn plain" id="van">Vẫn điểm danh</button></div><button class="btn plain" id="huy">Hủy</button>`, (s) => {
+      $("#gh", s).onclick = () => hoSo(id);
+      $("#van", s).onclick = async () => { await diemDanh(id, true); close(); };
+      $("#huy", s).onclick = close;
+    });
+    return;
+  }
+  await luu("diemdanh", docId, { hoivienId: id, ngay, hetHanLucDo: t.ma === "het" || t.ma === "chua" }, "Đã điểm danh " + h.ten);
+  qdd = ""; render();
+}
+function formGoi(g) {
+  const moi = !g;
+  sheet(`<h3>${moi ? "Thêm gói tập" : "Sửa gói tập"}</h3>
+    <div class="field"><label for="p-ten">Tên gói</label><input id="p-ten" value="${esc(g?.ten)}" maxlength="40"></div>
+    <div class="grid2"><div class="field"><label for="p-sl">Thời hạn</label><input id="p-sl" type="number" min="1" value="${g?.soLuong || 1}" class="num"></div>
+    <div class="field"><label for="p-dv">Đơn vị</label><select id="p-dv"><option value="thang" ${g?.donVi !== "ngay" ? "selected" : ""}>tháng</option><option value="ngay" ${g?.donVi === "ngay" ? "selected" : ""}>ngày</option></select></div></div>
+    <div class="field"><label for="p-gia">Giá (₫)</label><input id="p-gia" inputmode="numeric" value="${g ? g.gia : ""}" class="num"></div>
+    <label style="display:flex;gap:8px;align-items:center;font-size:14px"><input type="checkbox" id="p-thu" ${g?.thu ? "checked" : ""}> Là gói tập thử (theo dõi để gọi chốt)</label>
+    <div class="actions"><button class="btn plain" id="huy">Hủy</button>${moi ? "" : `<button class="btn plain" id="xg" style="color:var(--bad)">Xóa</button>`}<button class="btn" id="ok">Lưu</button></div><div id="xn"></div>`, (s) => {
+    $("#huy", s).onclick = close;
+    $("#ok", s).onclick = async () => {
+      const ten = $("#p-ten", s).value.trim(); if (!ten) { toast("Nhập tên gói."); return; }
+      const data = { ten, soLuong: Math.max(1, parseInt($("#p-sl", s).value, 10) || 1), donVi: $("#p-dv", s).value, gia: Number($("#p-gia", s).value.replace(/\D/g, "")) || 0, thu: $("#p-thu", s).checked, thuTu: g?.thuTu ?? S.goi.length };
+      if (await luu("goi", g?.id || uid(), data)) close();
+    };
+    const xg = $("#xg", s); if (xg) xg.onclick = () => {
+      $("#xn", s).innerHTML = `<div class="badbox">Xóa gói ${esc(g.ten)}? Thẻ đã bán vẫn giữ nguyên.<div class="actions" style="margin-top:8px"><button class="btn plain mini" id="k">Không</button><button class="btn danger mini" id="c">Xóa</button></div></div>`;
+      $("#k", s).onclick = () => ($("#xn", s).innerHTML = "");
+      $("#c", s).onclick = async () => { if (await xoa("goi", g.id)) close(); };
+    };
+  });
+}
+boot();
+</script>
